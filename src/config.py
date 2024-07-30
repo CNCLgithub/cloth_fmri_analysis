@@ -1,5 +1,5 @@
 PROJECT_DIR = '/gpfs/milgram/project/yildirim/wb338/github/%github_cloth_fmri_analysis'
-SUBJECT_LIST = ['{0:02d}'.format(n) for n in range(1,24)]
+SUBJECT_LIST = ['{0:02d}'.format(n) for n in range(1,25)]
 
 
 TASK = 'cloth'

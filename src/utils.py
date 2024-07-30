@@ -1,6 +1,7 @@
 import random, os
 import json
 import numpy as np
+from scipy.stats import pearsonr, spearmanr, kendalltau, rankdata
 
 
 def list_subdirs(directory):
@@ -82,3 +83,25 @@ def get_decoder(roi, manual_cv, C=1):
         cv=manual_cv)
 
     return decoder
+
+
+
+def split_half_cor(data, nboot=1000):
+    n_samples = data.shape[0]
+    bootstrap_correlations = []
+
+    for _ in range(nboot):
+        sample1_indices = np.random.choice(n_samples, n_samples, replace=True)
+        sample2_indices = np.random.choice(n_samples, n_samples, replace=True)
+
+        sample1 = data[sample1_indices, :]
+        sample2 = data[sample2_indices, :]
+
+        avg_sample1 = np.mean(sample1, axis=0)
+        avg_sample2 = np.mean(sample2, axis=0)
+
+        correlation, _ = spearmanr(avg_sample1, avg_sample2)
+        bootstrap_correlations.append(correlation)
+
+    average_bootstrap_correlation = np.mean(bootstrap_correlations)
+    return average_bootstrap_correlation
