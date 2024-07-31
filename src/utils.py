@@ -3,6 +3,8 @@ import json
 import numpy as np
 from scipy.stats import pearsonr, spearmanr, kendalltau, rankdata
 
+def bootstrap_sample(data):
+    return [random.choice(data) for _ in range(len(data))]
 
 def list_subdirs(directory):
     subdirs = [os.path.abspath(os.path.join(directory, d)) for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
@@ -30,9 +32,11 @@ def normalize_array(array):
     return array_normalized.tolist()
 
 
-def calc_p (array, baseline=0):
-    array = np.array(array)
-    return 2 * np.min([np.mean(array > baseline), np.mean(array < baseline)])
+def calc_p (x, baseline=0):
+    return 2 * np.min([
+        np.mean(np.array(x) > baseline),
+        np.mean(np.array(x) < baseline)
+    ])
 
 
 def get_confidence_interval(array, interval=95):
@@ -86,7 +90,29 @@ def get_decoder(roi, manual_cv, C=1):
 
 
 
-def split_half_cor(data, nboot=1000):
+
+
+def split_half_r(my_split_half_data, nboot=10000):
+    r_all = []
+    for _ in range(nboot):
+        np.random.shuffle(my_split_half_data)
+        half1 = my_split_half_data[:len(my_split_half_data)//2]
+        half2 = my_split_half_data[len(my_split_half_data)//2:]
+
+        mean_half1 = np.mean(half1, axis=0)
+        mean_half2 = np.mean(half2, axis=0)
+        r = spearmanr(mean_half1, mean_half2)[0]
+        r_all.append(r)
+    mean_r = round(np.mean(r_all),3)
+    p = round(calc_p(r_all),3)
+    return mean_r, p
+
+
+
+def bootstrap_cor(data, nboot=10000):
+    random.seed(9)
+    np.random.seed(9)
+    
     n_samples = data.shape[0]
     bootstrap_correlations = []
 
@@ -103,5 +129,19 @@ def split_half_cor(data, nboot=1000):
         correlation, _ = spearmanr(avg_sample1, avg_sample2)
         bootstrap_correlations.append(correlation)
 
-    average_bootstrap_correlation = np.mean(bootstrap_correlations)
-    return average_bootstrap_correlation
+    mean_r = np.mean(bootstrap_correlations)
+    p = calc_p(bootstrap_correlations)
+    return mean_r, p
+
+
+def get_mode_value(data):    
+    import statistics
+    from collections import Counter
+    counts = Counter(data)
+    max_count = max(counts.values())
+    modes = [k for k, v in counts.items() if v == max_count]
+    
+    if len(modes) > 1:
+        return statistics.mean(modes)
+    else:
+        return modes[0]
