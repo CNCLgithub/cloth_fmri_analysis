@@ -42,7 +42,7 @@ bash get_data.sh
   
 - [`create_baker_scramble_imgs.py`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/cloth_fmri/analysis/baker_test/create_baker_scramble_imgs.py): Generate Baker-scrambled control images used in the scrambling analysis.
   
-- [`foundation_models`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/cloth_fmri/analysis/foundation_models): A video regression pipeline using frozen VideoMAE, ViViT, or V-JEPA backbones with regression head.
+- [`foundation_models`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/cloth_fmri/analysis/foundation_models): A video regression pipeline using frozen VideoMAE, ViViT, or V-JEPA2 backbones with regression head.
 
 
 ### Plotting / Visualization
