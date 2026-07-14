@@ -2,7 +2,7 @@
 
 # Causal and statistical object representations in the brain (analysis)
 
-Collection of analysis scripts used in "Computational modeling reveals dissociable causal and statistical object representations in the human brain during spontaneous visual processing".
+Collection of analysis scripts used in "Computational modeling reveals dissociable physics-based and statistical object representations in the human brain during spontaneous visual processing".
 
 
 ## 📥 Clone the repository and install it as an editable Python package
