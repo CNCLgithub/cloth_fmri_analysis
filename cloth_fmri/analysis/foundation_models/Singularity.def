@@ -1,0 +1,45 @@
+Bootstrap: docker
+From: pytorch/pytorch:2.2.1-cuda12.1-cudnn8-runtime
+
+%labels
+    Author Wenyan Bi
+    Description Cloth physics video regression (PyTorch 2.2.1, CUDA 12.1)
+
+%files
+    requirements.txt /requirements.txt
+
+%environment
+    export LC_ALL=C
+    export LANG=C
+    export PYTHONUNBUFFERED=1
+    export TORCH_HOME=/opt/torch_cache
+    export HF_HOME=/opt/hf_cache
+    export TRANSFORMERS_CACHE=/opt/hf_cache
+    export OPENCV_LOG_LEVEL=ERROR
+
+%post
+    echo "=== [1/5] Installing system dependencies ==="
+    apt-get update && apt-get install -y --noй --no-install-recommends \
+        git \
+        ca-certificates \
+        ffmpeg \
+        libglib2.0-0 \
+        libsm6 \
+        libxext6 \
+        libxrender1 \
+        libgl1 \
+        build-essential \
+        && rm -rf /var/lib/apt/lists/*
+
+    echo "=== [2/5] Preparing cache directories ==="
+    mkdir -p /opt/torch_cache /opt/hf_cache
+    chmod -R 777 /opt/torch_cache /opt/hf_cache
+
+    echo "=== [3/5] Upgrading pip toolchain ==="
+    python -m pip install --upgrade pip setuptools wheel
+
+    echo "=== [4/5] Installing Python dependencies ==="
+    pip install --no-cache-dir -r /requirements.txt
+
+%runscript
+    exec "$@"

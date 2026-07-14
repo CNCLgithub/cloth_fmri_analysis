@@ -1,0 +1,7 @@
+# configs/backbone/videomae_base.yaml
+backbone:
+  name: "videomae"
+  hf_model_name: "MCG-NJU/videomae-base"   # you can swap
+  default_num_frames: 16
+  freeze: true
+  randomize_frame_idx: True  # the idx of the frames are randomly selected, otherwise it's 0, 15, 30 ....

@@ -1,0 +1,31 @@
+# configs/config.yaml
+model_name: vivit #vivit | videomae |vjepa2_hf
+seed: 42
+
+train:
+  type: "ridge"
+  alpha: 1.0
+  batch_size: 16
+ 
+head:
+  pool: "cls"            # "cls" or "mean"
+  dropout: 0.0
+
+dataset:
+  name: "cloth"
+  data_dir: "data/preprocessed"
+  feature_dir: "data/features"
+  normalize_targets: false
+  n_train: 4000 #7075
+
+  total_vid_frames: 32
+  max_train_samples: null  # null to use all
+  sampling_rate: 1
+  resize_short: 224
+  crop_size: 224
+
+  mean: [0.485, 0.456, 0.406]
+  std:  [0.229, 0.224, 0.225]
+
+  targets:
+    - bs

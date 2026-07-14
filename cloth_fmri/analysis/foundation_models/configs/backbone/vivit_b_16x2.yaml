@@ -1,0 +1,7 @@
+# configs/backbone/vivit_b_16x2.yaml
+backbone:
+  name: "vivit"
+  hf_model_name: "google/vivit-b-16x2-kinetics400"
+  default_num_frames: 32
+  freeze: true
+  randomize_frame_idx: True

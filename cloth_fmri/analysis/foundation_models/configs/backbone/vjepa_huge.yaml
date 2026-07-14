@@ -1,0 +1,8 @@
+# configs/backbone/vjepa_huge.yaml
+backbone:
+  name: vjepa2_hf
+  hf_repo: facebook/vjepa2-vitl-fpc64-256
+  freeze: true
+  randomize_frame_idx: True
+  default_num_frames: 16
+
