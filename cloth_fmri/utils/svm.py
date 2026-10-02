@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+from os.path import join as opj
 from nilearn.decoding import Decoder
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
@@ -85,8 +86,15 @@ def get_cnn_distance(verbose=False):
     )
 
 
-def get_videomae_distance(verbose=False):
-    from cloth_fmri.models.model_predictions import videomae_stiff_pred
+def get_videomae_distance(verbose=False, layer=-1):
+    if layer == -1:
+        from cloth_fmri.models.model_predictions import videomae_stiff_pred
+    else:
+        pred_dict_path = opj(CONFIG['output_root'], 'analysis', 
+                             'model_predictions_all_layers', 'videomae_ridge_mean_1.0_ntrain=7075',
+                             f'pred_dict_layer_index={layer}_layer_number={layer+1}.npy')
+        videomae_stiff_pred = np.load(pred_dict_path, allow_pickle=True).item()
+        
 
     return compute_soft_stiff_distance(
         videomae_stiff_pred,
@@ -94,8 +102,14 @@ def get_videomae_distance(verbose=False):
     )
 
 
-def get_vivit_distance(verbose=False):
-    from cloth_fmri.models.model_predictions import vivit_stiff_pred
+def get_vivit_distance(verbose=False, layer=-1):
+    if layer == -1:
+        from cloth_fmri.models.model_predictions import vivit_stiff_pred
+    else:
+        pred_dict_path = opj(CONFIG['output_root'], 'analysis', 
+                             'model_predictions_all_layers', 'vivit_ridge_cls_1.0_ntrain=7075',
+                             f'pred_dict_layer_index={layer}_layer_number={layer+1}.npy')
+        vivit_stiff_pred = np.load(pred_dict_path, allow_pickle=True).item()
 
     return compute_soft_stiff_distance(
         vivit_stiff_pred,
@@ -103,8 +117,14 @@ def get_vivit_distance(verbose=False):
     )
 
 
-def get_vjepa2_distance(verbose=False):
-    from cloth_fmri.models.model_predictions import vjepa2_stiff_pred
+def get_vjepa2_distance(verbose=False, layer=-1):
+    if layer == -1:
+        from cloth_fmri.models.model_predictions import vjepa2_stiff_pred
+    else:
+        pred_dict_path = opj(CONFIG['output_root'], 'analysis', 
+                             'model_predictions_all_layers', 'vjepa2_hf_ridge_mean_1.0_ntrain=7075',
+                             f'pred_dict_layer_index={layer}_layer_number={layer+1}.npy')
+        vjepa2_stiff_pred = np.load(pred_dict_path, allow_pickle=True).item()
 
     return compute_soft_stiff_distance(
         vjepa2_stiff_pred,
