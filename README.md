@@ -60,3 +60,6 @@ bash get_data.sh
 
 - [`Baker_scramble_analysis.ipynb`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/notebooks/Baker_scramble_analysis.ipynb): Generate figures for Baker’s scrambling test in Supplementary Fig. 8.
 
+- [`plot_svm_video_models_all_layers.ipynb`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/notebooks/plot_svm_video_models_all_layers.ipynb): Generate figures for layer-wise analysis of video models in Supplementary Fig. 11.
+
+- [`plot_rdm_video_models_all_layers.ipynb`](https://github.com/CNCLgithub/cloth_fmri_analysis/blob/main/notebooks/plot_rdm_video_models_all_layers.ipynb): Generate figures for layer-wise analysis of video models in Supplementary Fig. 11.
